@@ -2,12 +2,11 @@ const adsContainer = document.getElementById('ads-container');
 const jumpscare = document.getElementById('jumpscare');
 const scaryAudio = document.getElementById('scary-audio');
 
-// Nomes das suas fotos locais
-const photoFiles = ['foto1.jpg', 'foto2.jpg'];
-let photoIndex = 0; // Para alternar entre as fotos
+// Nomes das suas fotos locais com a extensão correta
+const photoFiles = ['foto1.jpeg', 'foto2.jpeg'];
+let photoIndex = 0;
 
 function triggerChaos() {
-    // Se o susto já estiver na tela, não faz nada
     if (!jumpscare.classList.contains('hidden')) return;
     
     createAd();
@@ -23,7 +22,7 @@ document.addEventListener('keydown', (e) => {
     triggerChaos();
 });
 
-// Dispara ao clicar (exceto no input de busca)
+// Dispara ao clicar (exceto no input)
 document.addEventListener('click', (e) => {
     if (e.target.id !== 'search-input' && jumpscare.classList.contains('hidden')) {
         triggerChaos();
@@ -33,14 +32,13 @@ document.addEventListener('click', (e) => {
 function createAd() {
     const ad = document.createElement('div');
     ad.className = 'ad-box';
-    // Posição aleatória na tela (evitando as bordas extremas)
     ad.style.left = `${Math.random() * 70 + 5}vw`;
     ad.style.top = `${Math.random() * 70 + 5}vh`;
-    ad.innerHTML = `<span>[X]</span><br><br><b>OFERTA VINDA DO ALÉM!</b><p>CLIQUE RAPIDO!</p>`;
+    ad.innerHTML = `<span>[X]</span><br><br><b>VOCÊ FOI SORTEADO!</b><p>CLIQUE PARA RECEBER</p>`;
     
-    // CLICOU NO ANÚNCIO = SUSTO IMEDIATO
+    // CLICOU NO ANÚNCIO = SUSTO
     ad.onclick = (e) => {
-        e.stopPropagation(); // Impede que o clique crie outro caos atrás
+        e.stopPropagation();
         showGhostface();
     };
     adsContainer.appendChild(ad);
@@ -49,44 +47,40 @@ function createAd() {
 function spawnPhoto() {
     const photo = document.createElement('img');
     
-    // Define qual foto local usar (alternando)
+    // Usa a extensão .jpeg conforme solicitado
     photo.src = photoFiles[photoIndex];
-    photoIndex = (photoIndex + 1) % photoFiles.length; // Alterna 0, 1, 0, 1...
+    photoIndex = (photoIndex + 1) % photoFiles.length;
     
     photo.className = 'moving-photo';
     
-    // Define a direção (esquerda para direita ou direita para esquerda)
     const fromLeft = Math.random() > 0.5;
-    const yPos = `${Math.random() * 80 + 5}vh`; // Altura aleatória
+    const yPos = `${Math.random() * 80 + 5}vh`;
 
     if (fromLeft) {
-        photo.style.left = '-250px'; // Começa fora da tela à esquerda
+        photo.style.left = '-250px';
         photo.style.top = yPos;
-        // Inicia o movimento lento para a direita
         setTimeout(() => {
             photo.style.left = '110vw';
         }, 50);
     } else {
-        photo.style.left = '110vw'; // Começa fora da tela à direita
+        photo.style.left = '110vw';
         photo.style.top = yPos;
-        // Inicia o movimento lento para a esquerda
         setTimeout(() => {
             photo.style.left = '-250px';
         }, 50);
     }
 
-    document.body.appendChild(photo);
+    // Se clicar na foto que está passando, também pode dar o susto? 
+    // Se quiser, basta descomentar a linha abaixo:
+    // photo.onclick = () => showGhostface();
 
-    // Remove a foto do HTML depois que ela termina de passar (21 segundos)
+    document.body.appendChild(photo);
     setTimeout(() => photo.remove(), 21000);
 }
 
 function showGhostface() {
     jumpscare.classList.remove('hidden');
-    // Tenta tocar a música local. Note que navegadores bloqueiam som sem interação prévia.
-    scaryAudio.play().catch(error => {
-        console.log("Áudio bloqueado pelo navegador. Requer clique prévio na página.");
-    });
+    scaryAudio.play().catch(e => console.log("Áudio aguardando interação..."));
 }
 
 function resetEverything() {
@@ -94,6 +88,5 @@ function resetEverything() {
     adsContainer.innerHTML = '';
     scaryAudio.pause();
     scaryAudio.currentTime = 0;
-    // Remove todas as fotos que estiverem passando
     document.querySelectorAll('.moving-photo').forEach(p => p.remove());
 }
