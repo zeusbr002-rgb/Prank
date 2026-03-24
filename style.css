@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Impede barras de rolagem durante a bagunça */
+    overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: white;
 }
@@ -14,11 +14,6 @@ body, html {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    pointer-events: none; /* Garante que os cliques passem para o body */
-}
-
-#fake-google img {
-    margin-bottom: 20px;
 }
 
 #search-input {
@@ -27,41 +22,39 @@ body, html {
     border-radius: 24px;
     border: 1px solid #dfe1e5;
     outline: none;
-    pointer-events: auto; /* Permite clicar no input */
+    z-index: 2;
 }
 
-/* Estilo dos Anúncios */
 .ad-box {
     position: absolute;
-    width: 220px;
-    height: 160px;
-    background: #ff5555;
-    border: 3px solid black;
-    color: white;
+    width: 200px;
+    height: 140px;
+    background: #f1f1f1;
+    border: 2px solid #ff0000;
+    color: #333;
     text-align: center;
-    z-index: 10;
+    z-index: 100;
     cursor: pointer;
-    box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
 }
 
 .ad-box span {
     display: block;
-    background: #333;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: bold;
+    background: red;
+    color: white;
+    padding: 3px;
+    font-size: 10px;
+    text-align: right;
 }
 
-/* Animais andando LENTAMENTE */
-.animal {
+.cat-gift {
     position: absolute;
-    width: 100px; /* Um pouco maiores para ver melhor */
-    z-index: 5;
-    /* AJUSTE DE VELOCIDADE: 10 segundos para cruzar a tela */
-    transition: left 10s linear; 
+    width: 120px;
+    z-index: 10;
+    /* Velocidade bem lenta: 12 segundos */
+    transition: left 12s linear; 
 }
 
-/* Tela de Jumpscare */
 #jumpscare {
     position: fixed;
     top: 0;
@@ -73,21 +66,18 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 1000;
 }
 
 #jumpscare img {
-    max-height: 80vh; /* Ajusta a altura da sua imagem */
-    max-width: 90vw;
+    max-width: 90%;
+    max-height: 70%;
 }
 
 #jumpscare h1 {
     color: red;
-    font-size: 4rem;
-    margin-top: 20px;
-    text-shadow: 0 0 10px red;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
 }
 
-.hidden {
-    display: none !important;
-}
+.hidden { display: none !important; }
