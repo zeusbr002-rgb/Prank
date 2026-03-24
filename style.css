@@ -1,0 +1,82 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+#fake-google {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#search-input {
+    width: 500px;
+    padding: 12px;
+    border-radius: 24px;
+    border: 1px solid #dfe1e5;
+    margin-top: 20px;
+    outline: none;
+}
+
+/* Estilo dos Anúncios */
+.ad-box {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    background: #ff5555;
+    border: 2px solid black;
+    color: white;
+    text-align: center;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.ad-box span {
+    display: block;
+    background: #333;
+    padding: 5px;
+    font-size: 12px;
+}
+
+/* Animais andando */
+.animal {
+    position: absolute;
+    width: 80px;
+    z-index: 5;
+    transition: all 2s linear;
+}
+
+/* Tela de Jumpscare */
+#jumpscare {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#jumpscare img {
+    width: 80%;
+}
+
+#jumpscare h1 {
+    color: red;
+    font-size: 4rem;
+}
+
+.hidden {
+    display: none !important;
+}
